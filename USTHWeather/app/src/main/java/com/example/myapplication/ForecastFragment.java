@@ -79,7 +79,7 @@ public class ForecastFragment extends Fragment {
         textView.setPadding(25, 25, 25, 25);
 
         ImageView imageView = new ImageView(getActivity());
-        imageView.setImageResource(R.drawable.baseline_sunny_24);
+        imageView.setImageResource(R.drawable.sunny_icon);
         imageView.setPadding(25, 25, 55, 25);
 
 
