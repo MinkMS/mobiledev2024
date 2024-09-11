@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:background="#67eb34"
+
+
+
+    tools:context=".WeatherFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:background="#67eb34">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12C\nCloudy"
+            android:textSize="20dp"
+            android:layout_alignParentLeft="true"/>
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/weather_icon"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parris"
+            android:textSize="16dp"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+</RelativeLayout>
+
+    protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_weather);
+    ForecastFragment firstFragment = new ForecastFragment(); // Create an instance of ForecastFragment
+    getSupportFragmentManager().beginTransaction().add(R.id.fragment_forecast, firstFragment).commit(); // Add the fragment to the container
+
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+
+    WeatherFragment secondFragment = new WeatherFragment();
+    fragmentTransaction.replace(R.id.fragment_weather, secondFragment);
+    fragmentTransaction.addToBackStack(null);  // Optional: adds transaction to back stack
+    fragmentTransaction.commit();
