@@ -1,6 +1,6 @@
 package vn.edu.usth.weather;
 
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,16 +42,36 @@ public class WeatherActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                // Action for refresh button
-                Toast.makeText(this, "Refreshing...", Toast.LENGTH_SHORT).show();
+                // Execute the AsyncTask to simulate a network request
+                new NetworkTask().execute();
                 return true;
             case R.id.action_settings:
                 // Start the PrefActivity for settings
-                Intent intent = new Intent(this, PrefActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(this, PrefActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // Inner AsyncTask class to simulate a network request
+    private class NetworkTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            // Simulate network delay (e.g., 3 seconds)
+            try {
+                Thread.sleep(3000);  // 3-second delay
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            // Show Toast when task is complete
+            Toast.makeText(WeatherActivity.this, "Network request completed", Toast.LENGTH_SHORT).show();
         }
     }
 }
