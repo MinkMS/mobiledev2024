@@ -1,54 +1,57 @@
+package vn.edu.usth.weather;
+
+import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 public class WeatherActivity extends AppCompatActivity {
-
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        // Initialize ViewPager and TabLayout
-        viewPager = findViewById(R.id.viewPager);
-        tabLayout = findViewById(R.id.tabLayout);
+        // Set up the Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        // Set up ViewPager with a FragmentPagerAdapter
-        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-            @Override
-            public Fragment getItem(int position) {
-                // Return new instances of WeatherAndForecastFragment
-                return new WeatherAndForecastFragment();
-            }
+        // Set up ViewPager and TabLayout
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        WeatherPagerAdapter adapter = new WeatherPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
 
-            @Override
-            public int getCount() {
-                return 3; // 3 fragments for 3 tabs
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                switch (position) {
-                    case 0:
-                        return "Tab 1";
-                    case 1:
-                        return "Tab 2";
-                    case 2:
-                        return "Tab 3";
-                    default:
-                        return null;
-                }
-            }
-        });
-
-        // Connect TabLayout with ViewPager
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_weather, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                // Action for refresh button
+                Toast.makeText(this, "Refreshing...", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_settings:
+                // Start the PrefActivity for settings
+                Intent intent = new Intent(this, PrefActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
